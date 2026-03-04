@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.util.List;
 import java.net.URI;
 import java.awt.Desktop;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class QuizGUI extends JFrame {
 
@@ -131,10 +133,13 @@ public class QuizGUI extends JFrame {
         detailsButton.setPreferredSize(new Dimension(350, 50));
         detailsButton.setFocusPainted(false);
         detailsButton.setBorderPainted(false);
-
-
         detailsButton.setVisible(false);
 
+         addGlowEffect(startButton);
+        addGlowEffect(yesButton);
+        addGlowEffect(noButton);
+        addGlowEffect(detailsButton);
+        
         startButton.addActionListener(e -> {
             welcomeLable.setVisible(false);
             startButton.setVisible(false);
@@ -161,6 +166,26 @@ public class QuizGUI extends JFrame {
 
     }
 
+    private void addGlowEffect(JButton button) {
+
+        Color normalBorder = new Color(230, 240, 255, 90);
+        Color hoverBorder = new Color( 255, 255, 255);
+
+        button.setBorder(BorderFactory.createLineBorder(normalBorder, 2));
+
+        button.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBorder(BorderFactory.createLineBorder(hoverBorder, 3));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBorder(BorderFactory.createLineBorder(normalBorder, 2));
+            }
+        });
+    }
     private void processAnswer(int answer) {
 
         if (answer == 1) {
@@ -327,4 +352,5 @@ public class QuizGUI extends JFrame {
     public static void main(String[] args) {
         new QuizGUI().setVisible(true);
     }
+
 }
